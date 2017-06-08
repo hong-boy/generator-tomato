@@ -14,6 +14,7 @@ const lodash = require('lodash/collection');
 const MUSTACHE_CONF = {
     '.package.json.mustache': 'package.json',
     '.pm2.json.mustache': 'pm2.json',
+    '.gitignore.mustache': '.gitignore',
     'config/env/.base.conf.js.mustache': 'config/env/base.conf.js',
     'views/.index.html.mustache': 'views/index.html'
 };
