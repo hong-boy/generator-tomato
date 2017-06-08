@@ -1,4 +1,5 @@
 # generator-tomato scaffolding
+[![Build Status](https://travis-ci.org/hong-boy/generator-tomato.svg?branch=master)](https://travis-ci.org/hong-boy/generator-tomato)
 * 安装
 * 如何使用
 
