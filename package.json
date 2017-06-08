@@ -1,6 +1,6 @@
 {
     "name":"generator-tomato",
-    "version":"0.1.1",
+    "version":"0.1.2",
     "description":"Scaffolding of tomato",
     "main":"generators/app/index.js",
     "scripts":{
