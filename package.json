@@ -1,6 +1,6 @@
 {
     "name":"generator-tomato",
-    "version":"0.1.0",
+    "version":"0.1.1",
     "description":"Scaffolding of tomato",
     "main":"generators/app/index.js",
     "scripts":{
@@ -9,10 +9,18 @@
     "files":[
         "generators"
     ],
+    "repository":{
+        "type":"git",
+        "url":"git+https://github.com/hong-boy/generator-tomato.git"
+    },
     "keywords":[
         "yeoman-generator"
     ],
-    "author":"hong-boy@foxmail.com",
+    "bugs":{
+        "url":"https://github.com/hong-boy/generator-tomato/issues"
+    },
+    "homepage":"https://github.com/hong-boy/generator-tomato#readme",
+    "author":"hong-boy",
     "license":"MIT",
     "dependencies":{
         "chalk":"^1.1.3",
