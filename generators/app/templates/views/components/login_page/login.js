@@ -6,8 +6,8 @@ export default {
         return {
             desc: 'Login Page...',
             form: {
-                username: '',
-                password: ''
+                username: 'admin',
+                password: '123'
             },
             rules: {
                 username: [
