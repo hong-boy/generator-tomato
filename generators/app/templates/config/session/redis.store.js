@@ -1,8 +1,8 @@
 'use strict';
 const Redis = require('ioredis');
 const Store = require('koa-session2').Store;
-const REDIS_CONFIG = require('../env.js').redis;
 const PREFIX = 'SESSION';
+let REDIS_CONFIG = null;
 
 /**
  * 参考自express-session-redis
@@ -10,6 +10,9 @@ const PREFIX = 'SESSION';
 class RedisStore extends Store {
     constructor() {
         super();
+        if (!REDIS_CONFIG) {
+            REDIS_CONFIG = require('../env.js').redis;
+        }
         this.redis = new Redis(REDIS_CONFIG);
     }
 
@@ -18,7 +21,7 @@ class RedisStore extends Store {
         return JSON.parse(data);
     }
 
-    async set(session, {sid=this.getID(24), maxAge=1000000}={}) {
+    async set(session, {sid = this.getID(24), maxAge = 1000000} = {}) {
         try {
             await this.redis.set(`${PREFIX}:${sid}`, JSON.stringify(session), 'EX', maxAge / 1000);
         } catch (e) {
