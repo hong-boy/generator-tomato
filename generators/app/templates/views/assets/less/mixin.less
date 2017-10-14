@@ -1,0 +1,20 @@
+@primaryColor:#00b8ff; // 主色调
+@blackColor:#333;
+@grayColor:#999;
+@screenMinWidth:1200px; //定义屏幕最小宽度（小于此值时自动出现滚动条）
+@screenMaxWidth:1600px; //定义屏幕最大宽度（大于此值时自动两端留白补齐）
+
+.flexlayout(@flex, @direction, @align, @justifyContent) {
+    display:@flex;
+    flex-direction:@direction;
+    align-items:@align;
+    justify-content:@justifyContent;
+}
+.animate(@name, @duration:0s, @func:linear, @delay:0s, @iteration:1, @direction:normal) {
+    animation-name:@name;
+    animation-duration:@duration;
+    animation-timing-function:@func;
+    animation-delay:@delay;
+    animation-iteration-count:@iteration;
+    animation-direction:@direction;
+}

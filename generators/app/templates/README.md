@@ -47,6 +47,20 @@
 ---
 ```
 
+### 单元测试
+* 调试  
+
+``` 
+1. 先全局安装node-inspector模块
+    npm install -g node-inspector
+2. 启动node-inspector
+    node-inspector --web-port 8089
+3. 已调试模式执行测试用例
+    mocha -t [TIMEOUT_MILLSECONDS] --debug-brk [TEST_CASE_FILE]
+4. 打开浏览器输入地址即可开始调试代码：[http://localhost:8089/debug?port=5858]
+```
+**PS：也可以直接使用```npm run test:debug [TEST_CASE_FILE]```命令（见package.json）**
+
 ### 目标
 1. Vue2作为视图层，Koa2作为控制层
 2. 支持mongo，支持REST

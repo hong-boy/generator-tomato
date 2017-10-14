@@ -1,14 +1,18 @@
 'use strict';
 import Vue from 'vue'
+import Vuebar from 'vuebar';
 import VueRouter from 'vue-router'
 import ElementUI from 'element-ui'
 import router from './routes'
 import LayoutView from './layout.vue'
 // 全局引入
 import IOT from './utils/common.js'
+import './assets/less/normalize.css'
 import 'element-ui/lib/theme-default/index.css'
+import './assets/fontello/css/fontello.css'
 import './assets/less/common.less'
 
+Vue.use(Vuebar);
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 
