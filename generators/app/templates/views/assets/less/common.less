@@ -13,12 +13,12 @@
         min-width:@screenMinWidth;
     }
     .container{
+        @margin:10px; // 与screenMinWidth保持一定比例
         box-sizing:border-box;
-        margin:0 auto;
-        min-width:@screenMinWidth;
+        min-width:@screenMinWidth - @margin*2;
         max-width:@screenMaxWidth;
         height:100%;
-        margin:0 15px;
+        margin:0 @margin;
     }
     .board{
         background:#FFF;
