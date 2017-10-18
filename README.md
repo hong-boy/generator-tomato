@@ -1,4 +1,4 @@
-# generator-tomato scaffolding
+# generator-tomato scaffolding for LAPP
 [![Build Status](https://travis-ci.org/hong-boy/generator-tomato.svg?branch=master)](https://travis-ci.org/hong-boy/generator-tomato)
 * 安装
 * 如何使用
