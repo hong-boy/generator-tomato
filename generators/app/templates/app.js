@@ -50,11 +50,14 @@ onerror(app);
 // connect-history-api-fallback(此插件会拦截所有GET|HEAD请求)
 app.use(historyFallback({
     index: ['/', conf.defaultPage].join(''),
-    verbose: conf.debug
+    verbose: conf.debug,
+    rewrites: [
+        {from: `${conf.project}/login/captcha`, to: rule => `${conf.project}/login/captcha`},
+    ]
 }));
 
 // static serve（因为项目中需要添加逻辑路径，即：conf.project，且ctx.path属于只读权限，故暂且自己实现静态资源服务）
-app.use(async (ctx, next)=> {
+app.use(async (ctx, next) => {
     let cpath = ctx.path;
     let matches = cpath.match(/\.+\w+$/);
     if (!!matches && conf.allowedFileExtension.indexOf(matches[0]) !== -1) {

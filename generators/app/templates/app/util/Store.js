@@ -36,7 +36,7 @@ class Store {
         }
         // 检测是否需要开启定时任务
         if (maxAge) {
-            this._timers.set(id, setTimeout(()=> {
+            this._timers.set(id, setTimeout(() => {
                 this.delete(key)
             }, maxAge))
         }

@@ -5,7 +5,7 @@
 
 ## 安装
 ```js
-npm install -g generator-tomato yeoman
+npm install -g generator-tomato yo
 ```
 ## 如何使用
 ```js

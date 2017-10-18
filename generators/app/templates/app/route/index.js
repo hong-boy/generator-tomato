@@ -17,11 +17,11 @@ const defaultPage = conf.defaultPage;
  * 显示框架页面 - index.html
  * （PS：配置koa-connect-api-fallback中间件后，此路由失效）
  */
-router.get(['/', '/index'], async (ctx, next)=> {
+router.get(['/', '/index'], async (ctx, next) => {
     await send(ctx, defaultPage, {root: rootPath});
 });
 
-router.post('/auth', async (ctx, next)=> {
+router.post('/auth', async (ctx, next) => {
     let path = ctx.request.body.path;
     let isLogin = false;
     let isAuth = false;
@@ -43,6 +43,8 @@ router.post('/auth', async (ctx, next)=> {
 
 router.post('/login', UserCtrl.signin);
 router.post('/logout', UserCtrl.signout);
+
+router.get('/login/captcha', UserCtrl.captcha);
 
 // 路由配置 - User
 router.use('/user', User.routes(), User.allowedMethods());

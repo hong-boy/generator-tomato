@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <p>Here is main page</p>
-        <span @click="getFakeData()">获取数据</span>
-        <textarea v-model="list"></textarea>
+    <div class="main-page">
+        <div class="container board">
+            <p>Here is main page</p>
+            <span @click="getFakeData()">获取数据</span>
+            <textarea v-model="list"></textarea>
+        </div>
     </div>
 </template>
 

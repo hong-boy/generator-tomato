@@ -16,10 +16,8 @@ level: 'debug',
 output: path.join(rootdir, 'logs/app.log')
 },
 webservice: {
-url: 'http://localhost:8001',
-ver: '/web',
-connectTimeout: false,
-requestTimeout: false
+baseUrl: 'http://localhost:8088/web',
+gzip: true,
 },
 session: {
 key: 'sid',

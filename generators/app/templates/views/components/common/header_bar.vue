@@ -1,8 +1,6 @@
 <template>
-    <el-row>
-        <el-col :span="24" class="header-bar">
-            {{desc}}
-        </el-col>
+    <el-row class="header-bar" justify="center" align="middle">
+        <div class="container">{{desc}}</div>
     </el-row>
 </template>
 
@@ -16,8 +14,7 @@
 
 <style lang="less">
     .header-bar{
-        position:relative;
-        height:70px;
-        background-color:rgba(119, 209, 118, 0.91);
+        color:#fff;
+        line-height:70px;
     }
 </style>
