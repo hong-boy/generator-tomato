@@ -4,7 +4,6 @@ var router = new Router();
 var path = require('path');
 var send = require('koa-send');
 var conf = require('../../config/env');
-var Demo = require('./Demo');
 var User = require('./User');
 var UserCtrl = require('../controller/UserController');
 var canAccessPath = require('../Auth.js').canAccessPath;
@@ -44,12 +43,9 @@ router.post('/auth', async (ctx, next) => {
 router.post('/login', UserCtrl.signin);
 router.post('/logout', UserCtrl.signout);
 
-router.get('/login/captcha', UserCtrl.captcha);
+router.get('/captcha', UserCtrl.captcha);
 
 // 路由配置 - User
 router.use('/user', User.routes(), User.allowedMethods());
-
-// 路由配置 - Demo
-router.use('/demo', Demo.routes(), Demo.allowedMethods());
 
 module.exports = router;

@@ -1,8 +1,6 @@
 <template>
-    <div v-bar style="height:100vh">
-        <div>
-            <router-view class="core-view"></router-view>
-        </div>
+    <div v-bar2.preventParentScroll>
+        <router-view class="core-view"></router-view>
     </div>
 </template>
 

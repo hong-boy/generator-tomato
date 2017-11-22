@@ -6,8 +6,8 @@
 
 <script type="text/ecmascript-6">
     export default {
-        data() {
-            return {desc: 'footbar'};
+        data () {
+            return {desc: 'baasbs ©2017'};
         }
     }
 </script>

@@ -1,0 +1,137 @@
+@import "mixin.less";
+.core{
+    // header高度
+    @headerBarHieght:70px;
+    // footer高度
+    @footerBarHieght:30px;
+    background:#FFF;
+    .header-bar{
+        position:relative;
+        box-sizing:border-box;
+        height:@headerBarHieght;
+        background:@primaryColor;
+        min-width:@screenMinWidth;
+    }
+    .container{
+        @margin:10px; // 与screenMinWidth保持一定比例
+        box-sizing:border-box;
+        min-width:@screenMinWidth - @margin*2;
+        max-width:@screenMaxWidth;
+        height:100%;
+        margin:0 @margin;
+    }
+    .board{
+        background:#FFF;
+        border-radius:5px;
+        border:1px solid lighten(@grayColor, 30%);
+        box-shadow:0 0 5px lighten(@grayColor, 30%);
+    }
+    .page{
+        position:relative;
+        box-sizing:border-box;
+        min-height:~"calc(100vh - @{headerBarHieght} - @{footerBarHieght})";
+        background:#E4ECEF;
+        padding:20px 0;
+        min-width:@screenMinWidth;
+    }
+    .footer-bar{
+        position:relative;
+        box-sizing:border-box;
+        background:@blackColor;
+        height:@footerBarHieght;
+        min-width:@screenMinWidth;
+        color:@grayColor;
+        text-align:center;
+        line-height:@footerBarHieght;
+    }
+    // 通用样式
+    .hide{
+        display:none !important;
+    }
+    .text-center{
+        text-align:center;
+    }
+    .text-left{
+        text-align:center;
+    }
+    .text-right{
+        text-align:center;
+    }
+    .slide-down{
+        position:relative;
+        .animate(slideDown, 0.5s)
+    }
+    .slide-up{
+        position:relative;
+        .animate(slideUp, 0.5s)
+    }
+    // vue-bar
+    @bgColor4VueBar:rgba(0, 0, 0, 0.1);
+    @bgColor4VueBarActive:rgba(0, 0, 0, 0.2);
+    @bgColor4VueBarHover:rgba(0, 0, 0, 0.5);
+    .vb > .vb-dragger{
+        z-index:5;
+        width:12px;
+        right:0;
+    }
+
+    .vb > .vb-dragger > .vb-dragger-styler{
+        -webkit-backface-visibility:hidden;
+        backface-visibility:hidden;
+        -webkit-transform:rotate3d(0, 0, 0, 0);
+        transform:rotate3d(0, 0, 0, 0);
+        -webkit-transition:background-color 100ms ease-out,
+        margin 100ms ease-out,
+        height 100ms ease-out;
+        transition:background-color 100ms ease-out,
+        margin 100ms ease-out,
+        height 100ms ease-out;
+        background-color:@bgColor4VueBar;
+        margin:5px 5px 5px 0;
+        border-radius:20px;
+        //height: calc(100% - 10px);
+        height:~'calc(100% - 10px)';
+        display:block;
+    }
+
+    .vb.vb-scrolling-phantom > .vb-dragger > .vb-dragger-styler{
+        background-color:@bgColor4VueBarActive;
+    }
+
+    .vb > .vb-dragger:hover > .vb-dragger-styler{
+        background-color:@bgColor4VueBarHover;
+        margin:0px;
+        height:100%;
+    }
+
+    .vb.vb-dragging > .vb-dragger > .vb-dragger-styler{
+        background-color:@bgColor4VueBar;
+        margin:0px;
+        height:100%;
+    }
+
+    .vb.vb-dragging-phantom > .vb-dragger > .vb-dragger-styler{
+        background-color:@bgColor4VueBarActive;
+    }
+    //end vue-bar
+}
+@keyframes slideDown{
+    from{
+        opacity:0;
+        top:-10px;
+    }
+    to{
+        opacity:1;
+        top:0;
+    }
+}
+@keyframes slideUp{
+    from{
+        opacity:0;
+        top:10px;
+    }
+    to{
+        opacity:1;
+        top:0;
+    }
+}

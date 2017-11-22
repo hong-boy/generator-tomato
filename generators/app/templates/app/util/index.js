@@ -29,6 +29,28 @@ exports.createCaptcha = function (option = {noise: 25}) {
     return svgCaptcha.create(option);
 };
 
+/**
+ * 格式化字符串
+ * Usage:
+ * pageNum = 1;
+ * pageSize = 10;
+ * /appInfos?pageNum={0}&pageSize={1} ==> /appInfos?pageNum=1&pageSize=10
+ * @param str
+ * @param args
+ * @returns {*}
+ */
+exports.format = function (str, ...args) {
+    if (typeof str !== 'string') {
+        return str;
+    }
+    let temp = str;
+    [].concat(args).forEach((item, i) => {
+        let regx = new RegExp("\\{" + i + "\\}", "g");
+        temp = temp.replace(regx, item);
+    });
+    return temp;
+};
+
 exports.Logger = require('./Logger.js');
 exports.Store = require('./Store.js');
 exports.Restify = require('./Restify.js');

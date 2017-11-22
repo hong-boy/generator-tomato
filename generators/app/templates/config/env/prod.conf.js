@@ -9,11 +9,15 @@ module.exports = deepMerge({
     env: 'production',
     dist: 'dist/prod',
     log4js: {
-        level: 'error'
+        level: 'info'
     },
     session: {
         key: 'prdsid',
         store: require('../session/redis.store.js') // 传入SessionStore类
+    },
+    webservice: {
+        baseUrl: 'http://172.19.3.138:6542/web',
+        gzip: true,
     },
     store: 'redis'
 }, base);

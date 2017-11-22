@@ -1,0 +1,280 @@
+import {fetch} from './fetch'
+import lodash from 'lodash'
+import {Message, Loading} from 'element-ui';
+
+const NAMESPACE = '{{&appname}}';
+
+/**
+* 将key用NAMESPACE包装
+* @param key
+* @private
+*/
+let _getNamespaceKey = function (key) {
+return [NAMESPACE, key].join('-')
+};
+
+/**
+* 从sessionStorage获取用户信息
+*/
+let loadUserInfo = function () {
+return loadSession('userInfo');
+};
+
+/**
+* 从localStorage获取用户信息
+*/
+let loadUserInfoLocalStorage = function () {
+return loadLocalStorage('userInfo');
+};
+
+/**
+* 存储用户信息 - session
+* @param user
+*/
+let restoreUserInfo = function (user) {
+restoreSession('userInfo', user);
+};
+
+/**
+* 存储用户信息 - local
+* @param user
+*/
+let restoreUserInfoLocalStorage = function (user) {
+restoreLocalStorage('userInfo', user);
+};
+
+/**
+* 移除用户信息 - session
+*/
+let removeUserInfo = function () {
+removeSession('userInfo');
+};
+
+/**
+* 移除用户信息 - local
+*/
+let removeUserInfoLocalStorage = function () {
+removeLocalStorage('userInfo');
+};
+
+/**
+* 获取sessionstorage中存储的对象
+* @param key
+*/
+let loadSession = function (key) {
+let value = window.sessionStorage.getItem(_getNamespaceKey(key));
+try {
+value = JSON.parse(value);
+} catch (e) {
+// 不是JSON字符串
+}
+return value;
+};
+
+/**
+* 获取localstorage中存储的对象
+* @param key
+*/
+let loadLocalStorage = function (key) {
+let value = window.localStorage.getItem(_getNamespaceKey(key));
+try {
+value = JSON.parse(value);
+} catch (e) {
+// 不是JSON字符串
+}
+return value;
+};
+
+/**
+* 向sessionstorage存储对象
+* @param key
+* @param value
+*/
+let restoreSession = function (key, value) {
+window.sessionStorage.setItem(
+_getNamespaceKey(key),
+lodash.isPlainObject(value) || lodash.isArray(value) ? JSON.stringify(value) : value
+);
+};
+
+/**
+* 向localstorage存储对象
+* @param key
+* @param value
+*/
+let restoreLocalStorage = function (key, value) {
+window.localStorage.setItem(
+_getNamespaceKey(key),
+lodash.isPlainObject(value) || lodash.isArray(value) ? JSON.stringify(value) : value
+);
+};
+
+/**
+* 从sessionstorage移除对象
+* @param key
+*/
+let removeSession = function (key) {
+window.sessionStorage.removeItem(_getNamespaceKey(key));
+};
+
+/**
+* 从localstorage移除对象
+* @param key
+*/
+let removeLocalStorage = function (key) {
+window.localStorage.removeItem(_getNamespaceKey(key));
+};
+
+/**
+* 从后端校验页面访问权限
+* @param path
+* @returns {{isLogin: boolean, isAuth: boolean}}<%={{ }}=%>
+*/
+let auth = async function (path) {
+let result = {isLogin: false, isAuth: false};
+try {
+let bean = await fetch('/auth', {path: path});
+result = bean.data;
+} catch (e) {
+console.error(e);
+}
+return result;
+};
+
+/**
+* 页面权限校验
+* （用于UI展示）
+* @param pageUrl
+* @returns {boolean}
+*/
+let auth4Page = function (pageUrl) {
+let flag = false,
+// user = loadUserInfo() || {};
+user = loadUserInfoLocalStorage() || {};
+flag = lodash.includes([].concat(user.full, user.fuzzy), pageUrl);
+return flag;
+};
+
+/**
+* 跳转至首页
+* @param{$router} router vue-router实例
+*/
+let redirect2Home = function (router) {
+if (router) {
+router.push('index');
+return;
+}
+location.href = 'index';
+};
+
+/**
+* 跳转至404页面
+* @param{$router} router vue-router实例
+*/
+let redirect2NotFound = function (router) {
+if (router) {
+router.push('404');
+return;
+}
+location.href = '404';
+};
+
+/**
+* 用户登出
+* @returns {Promise}
+*/
+let signout = function () {
+// removeUserInfo();
+removeUserInfoLocalStorage();
+return fetch('/logout');
+};
+
+/**
+* 显示loading加载（可以是多实例）
+* 需要注意的是，以服务的方式调用的全屏 Loading 是单例的：
+* 若在前一个全屏 Loading 关闭前再次调用全屏 Loading，
+* 并不会创建一个新的 Loading 实例，
+* 而是返回现有全屏 Loading 的实例
+* @param option 参考el-loading
+* @return Loading实例
+*/
+let showLoading = function (option) {
+let defaults = {text: '加载中', spinner: 'el-icon-loading', target: 'body'};
+option = Object.assign({}, defaults, option);
+return Loading.service(option);
+};
+
+/**
+* 关闭loading加载
+* @param inst
+*/
+let closeLoading = function (inst) {
+if (!inst) {
+console.warn('[inst] is null or empty!', inst);
+return;
+}
+inst.close();
+};
+
+/**
+* 显示消息提示框
+* @param msg
+* @param type 默认值：'error'
+* @param duration
+* @param onclose 关闭时的回调
+* @return {*}
+*/
+let showMessage = function (msg, type, duration, onclose) {
+let defaults = {duration: 3000, type: 'error', showClose: true};
+let option;
+if (lodash.isPlainObject(msg)) {
+option = msg;
+} else {
+option = {
+message: msg,
+type,
+duration,
+onClose: onclose
+};
+}
+if (!option.message) {
+throw Error('[message] is required');
+}
+option = Object.assign({}, defaults, option);
+return Message(option);
+};
+
+/**
+* 关闭消息提示框
+* @param inst
+*/
+let closeMessage = function (inst) {
+if (!inst) {
+console.warn('[inst] is null or empty!', inst);
+return;
+}
+inst.close();
+};
+
+export default {
+fetch,
+loadUserInfo,
+loadUserInfoLocalStorage,
+removeUserInfo,
+removeUserInfoLocalStorage,
+restoreUserInfo,
+restoreUserInfoLocalStorage,
+loadSession,
+loadLocalStorage,
+restoreSession,
+removeSession,
+auth,
+auth4Page,
+redirect2Home,
+redirect2NotFound,
+signout,
+showLoading,
+closeLoading,
+showMessage,
+closeMessage,
+}

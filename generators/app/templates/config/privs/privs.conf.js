@@ -17,26 +17,12 @@
 module.exports = {
     '01': {
         name: '首页',
-        urls: '/index'
+        urls: '/index',
+        fuzzy: true
     },
     '02': {
-        name: '用户管理',
-        urls: '/userManage',
-        children: {
-            '0201': {
-                name: '用户列表',
-                urls: '/userManage/list',
-                fuzzy: true
-            },
-            '0202': {
-                name: '用户详情',
-                urls: '/userManage/details'
-            },
-            '0203': {
-                name: '用户添加|编辑|删除',
-                urls: '/userManage/operate',
-                fuzzy: true
-            },
-        }
+        name: 'Demo页面',
+        urls: '/demo',
+        fuzzy: true
     }
 };

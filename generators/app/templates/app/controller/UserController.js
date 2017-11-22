@@ -2,6 +2,7 @@
 var passport = require('koa-passport');
 var logger = require('../util/Logger').logger('UserController');
 var ResponseBean = require('../bean/ResponseBean');
+var ConstantBean = require('../bean/ConstantBean');
 
 const util = require('../util/index');
 
@@ -19,7 +20,7 @@ let _promisify4Signin = function (ctx, next) {
             }
             // 将User存储到Session
             // 通过ctx.state.user获取
-            ctx.login(result, (err) => {
+            ctx.login(result, async (err) => {
                 if (err) {
                     logger.error('Serialize user into Session failed!', err);
                     bean.status = ResponseBean.STATUS.UNKNOWN_ERR;
@@ -27,7 +28,9 @@ let _promisify4Signin = function (ctx, next) {
                 } else {
                     // 应当只暴露用到的属性
                     let {loginName, full, fuzzy, userName} = result;
+                    let appStatusList = await ConstantBean.getAppStatus();
                     bean.data = {
+                        appStatusList,
                         loginName,
                         full,
                         fuzzy,
@@ -54,14 +57,9 @@ exports.signin = async function (ctx, next) {
  */
 exports.signout = async function (ctx, next) {
     ctx.logout();
+    ctx.session.passport = null;
+    delete ctx.session['passport'];
     ctx.body = new ResponseBean(ResponseBean.STATUS.OK, '登出成功');
-};
-
-/**
- * 用户列表
- */
-exports.list = async function (ctx, next) {
-    ctx.body = new ResponseBean(ResponseBean.STATUS.OK, "成功获取用户列表信息！", [{user: 'aa'}]);
 };
 
 /**

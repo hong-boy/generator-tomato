@@ -1,7 +1,9 @@
 <template>
-    <div>
-        <header-bar></header-bar>
-        <router-view class="page el-row"></router-view>
+    <div class="home-page">
+        <header-bar ref="headerbar"></header-bar>
+        <transition name="slide">
+            <router-view class="page el-row"></router-view>
+        </transition>
         <footer-bar></footer-bar>
     </div>
 </template>

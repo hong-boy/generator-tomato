@@ -10,14 +10,10 @@ debug: false, // true-开发模式 false-生产环境
 env: process.env.NODE_ENV || 'develpoment',
 dist: 'dist', // webpack打包输出路径
 defaultPage: 'index.html',
-allowedFileExtension: ['.js', '.css', '.html', '.ttf', '.woff', '.woff2', '.ico', '.png', '.jpg', '.jpeg', '.svg'], // 定义允许下载的文件类型
+allowedFileExtension: ['.js', '.css', '.html', '.ttf', '.woff', '.woff2', '.png', '.ico'], // 定义允许下载的文件类型
 log4js: {
 level: 'debug',
 output: path.join(rootdir, 'logs/app.log')
-},
-webservice: {
-baseUrl: 'http://localhost:8088/web',
-gzip: true,
 },
 session: {
 key: 'sid',
@@ -29,7 +25,9 @@ path: project
 redis: { // 通常一个项目只需配置一台redis服务器即可
 host: '127.0.0.1',
 port: 6379,
-db: 15
+db: 15,
+keyPrefix: '{{&appname}}:', // 定义redis中变量的固定前缀
+maxAge: 3600000, // 定义常量在redis中的生命周期 默认1h
 },
 store: null // 定义将项目中的常量存储于何处。null:NodeJS内存（默认） redis:Redis服务器
 };

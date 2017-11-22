@@ -61,6 +61,19 @@
 ```
 **PS：也可以直接使用```npm run test:debug [TEST_CASE_FILE]```命令（见package.json）**
 
+### package版本管理
+```
+1. 先全局安装npm-check-updates模块
+	npm install -g npm-check-updates
+2. 检查当前项目中可更新的模块
+	a) 进入package.json所在目录
+	b) 执行ncu命令
+3. 升级模块
+	a) 升级指定模块：ncu [MODULE_NAME]
+	b) 升级所有模块：
+```
+**PS: 具体用法见[官网](https://www.npmjs.com/package/npm-check-updates)**
+
 ### 目标
 1. Vue2作为视图层，Koa2作为控制层
 2. 支持mongo，支持REST
@@ -71,3 +84,5 @@
 7. 多页面和单页面混用支持
 8. 支持第三方登录，微博、微信
 9. 支持CSP，XSS过滤
+
+PS: 由于本系统以前使用的`session stroage`在同时打开**多个**`tag`标签时会出现无法读取到的问题， 所以改为`local storage`

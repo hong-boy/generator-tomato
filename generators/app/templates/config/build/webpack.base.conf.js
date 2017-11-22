@@ -21,24 +21,25 @@ const conf = {
     resolve: {
         extensions: [' ', '.js', '.vue'],
         alias: {
-            vue: 'vue/dist/vue.common.js'
+            vue: 'vue/dist/vue.common.js',
+            IOT: path.resolve(rootdir, 'views/utils/common.js'),
         }
     },
     module: {
         rules: [
             {test: /\.vue$/, use: ['vue-loader']},
             {test: /\.js$/, use: ['babel-loader'], exclude: /node_modules/},
-            {test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/, use: ['file-loader']},
             {test: /\.(css|less)$/, use: ['style-loader', 'css-loader', 'less-loader']},
             {
-                test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,
-                use: {loader: 'file-loader', options: {name: '[name].[ext]?[hash]'}}
+                test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)(\?\S*)?$/,
+                use: {loader: 'file-loader', options: {name: '[name]-[hash].[ext]'}}
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             inject: true,
+            favicon: path.resolve(rootdir, 'views', 'assets/image/favicon.ico'),
             project: app.project,
             filename: 'index.html',
             template: path.resolve(rootdir, 'views', 'index.html')

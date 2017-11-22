@@ -1,0 +1,98 @@
+@import "../../assets/less/mixin.less";
+.main-page{
+    .head-wrap{
+        padding:0 40px;
+        border-bottom:1px solid #f2f2f2;
+        span{
+            font-size:14px;
+            color:#999;
+            line-height:50px;
+        }
+    }
+    .statistics,
+    .latest-application{
+        padding:0 40px;
+    }
+    .statistics{
+        .el-card{
+            box-shadow:none;
+            background-color:#f1f8fb;
+            border:none;
+            text-align:center;
+            &:hover{
+                box-shadow:0 0 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
+            }
+            span,
+            p{
+                color:#666;
+                margin:15px 0;
+            }
+            .light-yello{
+                color:#f8a401;
+                font-size:14px;
+            }
+            .bigger{
+                color:#333;
+                font-size:32px;
+            }
+            .divider{
+                margin:0 5px;
+            }
+        }
+    }
+    .latest-application{
+        .tbl{
+            border-right:1px solid #eee;
+            .el-table__body-wrapper{
+                border:1px solid #eee;
+                border-bottom:none;
+                min-height:450px;
+            }
+        }
+        .load-more{
+            font-size:14px;
+            color:#666;
+            text-align:center;
+            position:relative;
+            width:100%;
+            height:18px;
+            margin:15px 0;
+        }
+    }
+    .content{
+        position:relative;
+        min-height:450px;
+        margin-bottom:20px;
+        .no-data{
+            position:absolute;
+            .flexlayout(flex, row, center, center);
+            width:100%;
+            height:100%;
+            background-color:rgba(239, 239, 239, 0.9);
+            font-size:16px;
+            font-weight:bold;
+            color:@secondaryFontColor;
+            .link{
+                margin-left:10px;
+            }
+        }
+    }
+    .title-wrap{
+        padding-top:30px;
+        padding-bottom:20px;
+        span{
+            color:#333;
+            font-size:16px;
+        }
+        &::before{
+            content:'';
+            width:4px;
+            height:4px;
+            background-color:#666;
+            border-radius:50%;
+            display:inline-block;
+            vertical-align:middle;
+            margin-right:10px;
+        }
+    }
+}

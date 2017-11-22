@@ -7,7 +7,7 @@ const StatusCode = require('../bean/StatusCode');
 const OPTION = require('../../config/env.js')['webservice'];
 
 function _request(method, restify) {
-    restify.addHeader('access_token', restify.getToken() || undefined);
+    restify.addHeader('session-token', restify.getToken() || undefined);
     let path = restify.getPath();
     let option = lodash.defaultsDeep({}, OPTION, {
         method: method,
@@ -42,7 +42,7 @@ function _request(method, restify) {
 
 function _handleError(method, path, err) {
     if (err.statusCode) {
-        var msg = err.msg || err.message || (err.body && err.body.msg);
+        var msg = err.body ? JSON.stringify(err.body) : err.statusMessage;
         logger.error('Error happened when excute %s method - code: %d. Error message: %s', method, err.statusCode, msg);
         return {code: StatusCode.API_ERROR, msg: '远程服务器发生错误，数据操作失败！', statusCode: err.statusCode};
     } else if (err.code) {
@@ -199,6 +199,9 @@ class Restify {
      * @returns {null|*}
      */
     getToken() {
+        if (!this.token && this.ctx && this.ctx.state && this.ctx.state.user) {
+            this.token = this.ctx.state.user.access_token;
+        }
         return this.token;
     }
 

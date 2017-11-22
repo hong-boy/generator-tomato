@@ -16,7 +16,8 @@ const MUSTACHE_CONF = {
     '.pm2.json.mustache': 'pm2.json',
     '.gitignore.mustache': '.gitignore',
     'config/env/.base.conf.js.mustache': 'config/env/base.conf.js',
-    'views/.index.html.mustache': 'views/index.html'
+    'views/.index.html.mustache': 'views/index.html',
+    'views/utils/.common.js.mustache': 'views/utils/common.js',
 };
 
 /**

@@ -1,6 +1,7 @@
 'use strict';
 const Redis = require('ioredis');
 const Store = require('koa-session2').Store;
+const sessionConf = require('../env').session;
 const PREFIX = 'SESSION';
 let REDIS_CONFIG = null;
 
@@ -21,7 +22,7 @@ class RedisStore extends Store {
         return JSON.parse(data);
     }
 
-    async set(session, {sid = this.getID(24), maxAge = 1000000} = {}) {
+    async set(session, {sid = this.getID(24), maxAge = sessionConf.maxAge} = {}) {
         try {
             await this.redis.set(`${PREFIX}:${sid}`, JSON.stringify(session), 'EX', maxAge / 1000);
         } catch (e) {

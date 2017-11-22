@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const app = new Koa();
 const json = require('koa-json');
+const helmet = require('koa-helmet');
 const session = require('koa-session2');
 const passport = require('koa-passport');
 const onerror = require('koa-onerror');
@@ -47,12 +48,26 @@ function _initSession(session) {
 // error handler
 onerror(app);
 
+// CSP拦截
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'", "*.10086.cn"],
+            scriptSrc: ["'self'"],
+            objectSrc: ["'none'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            imgSrc: ["'self'", "data:"]
+        }
+    }
+}));
+
 // connect-history-api-fallback(此插件会拦截所有GET|HEAD请求)
 app.use(historyFallback({
     index: ['/', conf.defaultPage].join(''),
     verbose: conf.debug,
     rewrites: [
-        {from: `${conf.project}/login/captcha`, to: rule => `${conf.project}/login/captcha`},
+        // 添加白名单 - 防止historyFallback过滤
+        {from: `${conf.project}/captcha`, to: rule => `${conf.project}/captcha`},
     ]
 }));
 

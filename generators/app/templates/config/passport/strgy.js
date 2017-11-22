@@ -4,7 +4,7 @@ const lodash = require('lodash/object');
 const conf = require('../privs.js');
 const StoreUtil = require('../../app/util/Store');
 const Restify = require('../../app/util/Restify');
-const PREFIX_4_ROLE = 'koa:role';
+const PREFIX_4_ROLE = 'ROLE';
 const env = require('../env.js');
 const MAXAGE_4_ROLE = env.session.maxAge;
 const isDebug = !!env.debug;
@@ -40,48 +40,7 @@ async function processPrivsUrl(roleId) {
 
     return result;
 }
-// 正式项目中恢复这段代码
-// /**
-//  * 获取用户信息
-//  * @param username
-//  * @param password
-//  * @returns {Promise}
-//  */
-// async function fetchUser(username, password) {
-//     let restify = new Restify();
-//     let result = {
-//         err: false,
-//         user: null,
-//         msg: null,
-//     };
-//     let ret = await restify.get(`/login?uname=${username}&psw=${password}`);
-//     if (ret.code != 200) {
-//         result.err = ret.code;
-//         result.msg = ret.msg;
-//         return result;
-//     }
-//
-//     if (!ret.data) {
-//         result.err = ret.code;
-//         result.msg = ret.msg || '用户名或密码错误';
-//         return result;
-//     }
-//
-//     if (ret.data.roleId != 1) {
-//         result.err = 403;
-//         result.msg = '无权限登录此系统！';
-//         return result;
-//     }
-//
-//     result.err = ret.code; // 200
-//     result.user = ret.data;
-//     let privs = await processPrivsUrl(result.user.roleId);
-//     result.user = lodash.assign({access_token: ret.access_token}, result.user, privs);
-//     console.debug(result);
-//     return result;
-// }
 
-// 演示项目中删除本段代码
 /**
  * 获取用户信息
  * @param username
@@ -89,16 +48,37 @@ async function processPrivsUrl(roleId) {
  * @returns {Promise}
  */
 async function fetchUser(username, password) {
-    // admin/123
-    let fakeUser = {"username": "admin", "password": "202cb962ac59075b964b07152d234b70", "roleId": 1};
-    let result = null;
-    if (username === fakeUser.username && password === fakeUser.password) {
-        result = fakeUser;
-        let privs = await processPrivsUrl(result.roleId);
-        result = lodash.assign(result, privs);
-        result = {err: 200, msg: '成功', user: result};
-        console.debug(result);
+    let restify = new Restify();
+    let result = {
+        err: false,
+        user: null,
+        msg: null,
+    };
+    // TODO change to your URL
+    let ret = await restify.get(`/login?uname=${username}&psw=${password}`);
+    if (ret.code != 200) {
+        result.err = ret.code;
+        result.msg = ret.msg;
+        return result;
     }
+
+    if (!ret.data) {
+        result.err = ret.code;
+        result.msg = ret.msg || '用户名或密码错误';
+        return result;
+    }
+
+    if (ret.data.roleId != 1) {
+        result.err = 403;
+        result.msg = '无权限登录此系统！';
+        return result;
+    }
+
+    result.err = ret.code; // 200
+    result.user = ret.data;
+    let privs = await processPrivsUrl(result.user.roleId);
+    result.user = lodash.assign({access_token: ret.access_token}, result.user, privs);
+    console.debug(result);
     return result;
 }
 

@@ -1,8 +1,6 @@
 import es6Promise from 'es6-promise'
 import iFetch from 'isomorphic-fetch'
-import path from 'path'
 import _ from 'lodash'
-import {Message} from 'element-ui';
 
 es6Promise.polyfill(); // 浏览器兼容Promise
 
@@ -35,8 +33,7 @@ function _handleResponse(resp) {
     let error = new Error();
     // 处理http request error
     switch (resp.status) {
-        case 401:
-        {
+        case 401: {
             // 没有权限
             console.error(resp);
             Message.error({
@@ -45,16 +42,14 @@ function _handleResponse(resp) {
             });
             break;
         }
-        case 408:
-        {
+        case 408: {
             // session超时或者为空
             console.error(resp);
             IOT.removeUserInfo();
             IOT.redirect2Home();
             break;
         }
-        default:
-        {
+        default: {
             error.status = 500;
             error.msg = '一般错误';
             console.error(error);
@@ -67,13 +62,18 @@ function _handleResponse(resp) {
  * 向后台请求JSON格式数据
  * @param url
  * @param data
- * @param overlay
+ * @param{object} overlay 参考el-loading配置
  * @returns {Promise}
  */
 export function fetch(url, data, overlay) {
+    let loading;
+    if (overlay) {
+        loading = IOT.showLoading(overlay);
+    }
     let option = _.extend({}, OPTIONS, {body: JSON.stringify(data)});
-    let promise = new Promise(async (resolve, reject)=> {
+    let promise = new Promise(async (resolve, reject) => {
         let resp = await iFetch(_formatUrl(url), option);
+        loading && IOT.closeLoading(loading);
         let result = _handleResponse(resp);
         resolve(result);
     });

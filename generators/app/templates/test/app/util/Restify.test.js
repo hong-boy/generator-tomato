@@ -3,13 +3,11 @@ const assert = require('power-assert');
 const fs = require('fs');
 const Restify = require('../../../app/util/Restify.js');
 
-// 后端webservice地址http://localhost:8088/web
 describe('app/util/Restify.js', function () {
     beforeEach(function () {
         this.restify = new Restify();
     });
 
-    // get
     it('#get()', async function () {
         let restify = this.restify;
         restify.setPath('/echo/somebody?age=22');
@@ -22,7 +20,6 @@ describe('app/util/Restify.js', function () {
         }
     });
 
-    // post
     it('#post()', async function () {
         let restify = this.restify;
         restify.setPath('/echo/somebody');
@@ -35,7 +32,6 @@ describe('app/util/Restify.js', function () {
         }
     });
 
-    // put
     it('#put()', async function () {
         let restify = this.restify;
         restify.setPath('/echo/somebody');
@@ -47,7 +43,6 @@ describe('app/util/Restify.js', function () {
         }
     });
 
-    // delete
     it('#del()', async function () {
         let restify = this.restify;
         restify.setPath('/echo/somebody');
@@ -59,7 +54,6 @@ describe('app/util/Restify.js', function () {
         }
     });
 
-    // 文件上传
     it('#upload()', async function () {
         let restify = this.restify;
         restify.setPath('/file').addHeader('X-custom-field', 'test-header');

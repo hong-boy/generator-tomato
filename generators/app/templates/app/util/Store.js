@@ -3,7 +3,7 @@ const Redis = require('ioredis');
 const conf = require('../../config/env.js');
 const redisConf = conf.redis;
 const store = conf.store;
-const PREFIX = 'koa:store';
+const PREFIX = 'CNST';
 
 /**
  * Store基类（默认存储在内存中）
@@ -12,50 +12,61 @@ class Store {
     constructor() {
         this._map = new Map();
         this._timers = new Map();
-        console.warn('You are using memory cache. Please make sure change to "RedisStore" in production!');
     }
 
     getID(key) {
         return `${PREFIX}:${key}`;
     }
 
-    get(key) {
-        let id = this.getID(key);
-        if (!this._map.has(id)) {
-            return;
-        }
-        return JSON.parse(this._map.get(id));
+    async get(key) {
+        let promise = new Promise(resolve => {
+            let id = this.getID(key);
+            if (!this._map.has(id)) {
+                resolve(null);
+            }
+            resolve(JSON.parse(this._map.get(id)));
+        });
+        return promise;
     }
 
-    set(key, value, maxAge) {
-        let id = this.getID(key);
-        if (this._map.has(id) && this._timers.has(id)) {
-            // 若之前已存在，则立即关闭定时任务
-            let _timer = this._timers.get(id);
-            !!timer && (clearTimeout(_timer));
-        }
-        // 检测是否需要开启定时任务
-        if (maxAge) {
-            this._timers.set(id, setTimeout(() => {
-                this.delete(key)
-            }, maxAge))
-        }
-        try {
-            this._map.set(id, JSON.stringify(value));
-        } catch (e) {
-            console.error('Set property error:', e);
-        }
-        return id;
+    async set(key, value, maxAge) {
+        return new Promise(resolve => {
+            let id = this.getID(key);
+            if (this._map.has(id) && this._timers.has(id)) {
+                // 若之前已存在，则立即关闭定时任务
+                let _timer = this._timers.get(id);
+                !!timer && (clearTimeout(_timer));
+            }
+            // 检测是否需要开启定时任务
+            if (maxAge) {
+                this._timers.set(id, setTimeout(() => {
+                    this.delete(key)
+                }, maxAge))
+            }
+            try {
+                this._map.set(id, JSON.stringify(value));
+            } catch (e) {
+                console.error('Set property error:', e);
+            }
+            resolve(id);
+        });
     }
 
-    delete(key) {
-        let id = this.getID(key);
-        // 清除记录
-        this._map.delete(id);
-        // 关闭定时任务
-        let _timer = this._timers.get(id);
-        !!_timer && (clearTimeout(_timer));
-        this._timers.delete(id);
+    async delete(key) {
+        return new Promise(resolve => {
+            try {
+                let id = this.getID(key);
+                // 清除记录
+                this._map.delete(id);
+                // 关闭定时任务
+                let _timer = this._timers.get(id);
+                !!_timer && (clearTimeout(_timer));
+                this._timers.delete(id);
+                resolve(true);
+            } catch (e) {
+                resolve(false);
+            }
+        });
     }
 }
 
@@ -74,7 +85,14 @@ class RedisStore extends Store {
         return JSON.parse(data);
     }
 
-    async set(key, value, maxAge) {
+    /**
+     * 存储
+     * @param key
+     * @param value
+     * @param maxAge 单位ms
+     * @return {Promise.<*>}
+     */
+    async set(key, value, maxAge = redisConf.maxAge) {
         let id = this.getID(key);
         try {
             await this._redis.set(id, JSON.stringify(value), 'EX', maxAge / 1000);

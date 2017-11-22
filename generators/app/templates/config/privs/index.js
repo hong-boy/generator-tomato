@@ -10,8 +10,8 @@ var roles = require('./roles.conf'),
 const WHITE_LIST = [
     '/auth',
     '/login',
-    '/login/captcha', // 图片验证码
     '/logout',
+    '/captcha', // 登录页面验证码
 ];
 
 // 组装权限
