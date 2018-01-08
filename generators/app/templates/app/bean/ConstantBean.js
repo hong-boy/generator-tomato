@@ -10,7 +10,14 @@ const APP_STATUS = {
     '4': '已停止',
     // '5': '已删除',
     '6': '待审核',
-    '7': '审核未通过'
+    '7': '审核未通过',
+    '8': '待修改完成'
+};
+
+const APP_CHECK_STATUS = {
+    '0': '未审核',
+    '1': '通过',
+    '2': '未通过'
 };
 
 module.exports = class ConstantBean {
@@ -27,5 +34,14 @@ module.exports = class ConstantBean {
             statusList = APP_STATUS;
         }
         return statusList;
+    }
+    static async getCheckAppStatus() {
+        const tag = 'APP_CHECK_STATUS';
+        let checkStatusList = await StoreUtil.get(tag);
+        if (!checkStatusList) {
+            await StoreUtil.set(tag, APP_CHECK_STATUS);
+            checkStatusList = APP_CHECK_STATUS;
+        }
+        return checkStatusList;
     }
 };

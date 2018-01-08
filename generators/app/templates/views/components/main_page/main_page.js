@@ -5,10 +5,7 @@ const service = {
      */
     async queryStats() {
         let result = await IOT.fetch('/index/stat');
-        if (result.status != 200) {
-            console.error(result.msg);
-        }
-        return result.data;
+        return result;
     },
     /**
      * 查询最新应用列表
@@ -16,7 +13,7 @@ const service = {
      */
     async queryAppList(params) {
         let result = await IOT.fetch('/index/list', params);
-        return result.data;
+        return result;
     },
     /**
      * 初始化最新应用列表
@@ -25,8 +22,8 @@ const service = {
     async initAppListUI(vm){
         let appList = await service.queryAppList(vm.table.pager);
         vm.vloadingBody = false;
-        if (appList && appList.length) {
-            vm.table.list = appList;
+        if (appList && appList.data && appList.data.length) {
+            vm.table.list = appList.data;
             vm.v4AppNoData = false;
         } else {
             vm.v4AppNoData = true;
@@ -39,11 +36,13 @@ export default {
         let thiz = this;
         // 获取数据统计
         let statInfo = await service.queryStats();
-        if (statInfo) {
-            thiz.device = statInfo.device;
-            thiz.datapoint = statInfo.datapoint;
-            thiz.app = statInfo.app;
-            thiz.lapp = statInfo.lapp;
+        if (statInfo && statInfo.status === 200) {
+            thiz.device = statInfo.data.device;
+            thiz.datapoint = statInfo.data.datapoint;
+            thiz.app = statInfo.data.app;
+            thiz.lapp = statInfo.data.lapp;
+        }else{
+            IOT.showMessage(`数据统计加载失败：${statInfo.msg}`, 'warning', 2000);
         }
         // 获取最新应用列表
         service.initAppListUI(thiz);
@@ -94,8 +93,8 @@ export default {
             thiz.table.pager.pageNum++;
             let appList = await service.queryAppList(thiz.table.pager);
             thiz.vloading = false;
-            if (appList.length) {
-                appList.map(function (item) {
+            if (appList && appList.data && appList.data.length) {
+                appList.data.map(function (item) {
                     thiz.table.list.push(item);
                 });
             } else {

@@ -1,4 +1,0 @@
---reporter spec
--t 10000
--s 5000
---require intelli-espower-loader

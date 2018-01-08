@@ -8,6 +8,7 @@ const PREFIX_4_ROLE = 'ROLE';
 const env = require('../env.js');
 const MAXAGE_4_ROLE = env.session.maxAge;
 const isDebug = !!env.debug;
+const bsAdminId = 1;//后台管理员roleId为固定值1
 
 /**
  * 根据用户角色ID获取用户权限
@@ -54,8 +55,7 @@ async function fetchUser(username, password) {
         user: null,
         msg: null,
     };
-    // TODO change to your URL
-    let ret = await restify.get(`/login?uname=${username}&psw=${password}`);
+    let ret = await restify.get(`/login?uname=${username}&psw=${password}&roleId=${bsAdminId}`);
     if (ret.code != 200) {
         result.err = ret.code;
         result.msg = ret.msg;
@@ -68,7 +68,7 @@ async function fetchUser(username, password) {
         return result;
     }
 
-    if (ret.data.roleId != 1) {
+    if (ret.data.roleId != bsAdminId) {
         result.err = 403;
         result.msg = '无权限登录此系统！';
         return result;

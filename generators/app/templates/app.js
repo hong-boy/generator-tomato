@@ -32,6 +32,11 @@ async function _logger4req(ctx, next) {
     await next();
     let statusCode = ctx.status;
     logger.info(`Response for [${method} - ${statusCode} - ${path}]. It takes ${Date.now() - sTime}ms.`);
+    if(statusCode === 408){
+        let errmsg = ctx['session-token-invalid'];
+        delete ctx['session-token-invalid'];
+        ctx.body = errmsg;
+    }
 }
 /**
  *  为session指定SessionStore
@@ -53,7 +58,7 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'", "*.10086.cn"],
-            scriptSrc: ["'self'"],
+            scriptSrc: conf.debug ? ["'self'", "'unsafe-eval'"] : ["'self'"],
             objectSrc: ["'none'"],
             styleSrc: ["'self'", "'unsafe-inline'"],
             imgSrc: ["'self'", "data:"]
@@ -66,8 +71,7 @@ app.use(historyFallback({
     index: ['/', conf.defaultPage].join(''),
     verbose: conf.debug,
     rewrites: [
-        // 添加白名单 - 防止historyFallback过滤
-        {from: `${conf.project}/captcha`, to: rule => `${conf.project}/captcha`},
+        {from: `${conf.project}/login/captcha`, to: rule => `${conf.project}/login/captcha`},
     ]
 }));
 

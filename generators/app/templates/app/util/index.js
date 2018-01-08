@@ -7,7 +7,7 @@ let svgCaptcha = require('svg-captcha-smooth');
  * @param{Date|Number} date
  * @param{String} format
  */
-exports.date2String = function (date, format = 'YYYY-MM-DD HH:mm:ss') {
+exports.date2String = function(date, format = 'YYYY-MM-DD HH:mm:ss') {
     return moment(date).format(format);
 };
 
@@ -16,7 +16,7 @@ exports.date2String = function (date, format = 'YYYY-MM-DD HH:mm:ss') {
  * @param{String} str
  * @param{String} format 日期格式
  */
-exports.string2Date = function (str, format = 'YYYY-MM-DD HH:mm:ss') {
+exports.string2Date = function(str, format = 'YYYY-MM-DD HH:mm:ss') {
     return moment(str, format).toDate();
 };
 
@@ -25,7 +25,7 @@ exports.string2Date = function (str, format = 'YYYY-MM-DD HH:mm:ss') {
  * @param{Object} option
  * @returns {option}
  */
-exports.createCaptcha = function (option = {noise: 25}) {
+exports.createCaptcha = function(option = { noise: 25 }) {
     return svgCaptcha.create(option);
 };
 

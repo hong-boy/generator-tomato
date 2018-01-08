@@ -1,48 +1,50 @@
-.login-page{
-    min-height:100vh;
-    .login-header{
-        width:100vw;
-        min-height:330px;
-        background:url('../../assets/image/student-849825.png') no-repeat 0 7%;
-        background-color:#33c6ff;
-        background-size:cover;
-        h2{
-            width:100vw;
-            color:#fff;
-            font-size:50px;
-            text-align:center;
-            font-weight:normal;
-            margin:0;
-            padding:60px 0 50px 0;
+.login-page {
+    min-height: 100vh;
+    .login-header {
+        width: 100vw;
+        min-height: 330px;
+        background: url('../../assets/image/student-849825.jpg') no-repeat;
+        background-position: 0 50%;
+        background-size: cover;
+        h2 {
+            width: 100vw;
+            color: #fff;
+            font-size: 50px;
+            text-align: center;
+            font-weight: normal;
+            margin: 0;
+            padding: 60px 0 50px 0;
         }
-        .sys-name{
-            width:318px;
-            color:#fff;
-            text-align:center;
-            border:1px solid #fff;
-            border-radius:4px;
-            margin:0 auto;
-            margin-bottom:35px;
-            p.sys-name-cn{
-                font-size:36px;
-                margin-bottom:13px;
-                margin-top:24px;
+        .sys-name {
+            width: 318px;
+            color: #fff;
+            text-align: center;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            margin: 0 auto;
+            margin-bottom: 35px;
+            p.sys-name-cn {
+                font-size: 36px;
+                margin-bottom: 13px;
+                margin-top: 24px;
             }
-            p.sys-name-en{
-                font-size:14px;
-                margin-bottom:21px;
+            p.sys-name-en {
+                font-size: 14px;
+                margin-bottom: 21px;
             }
         }
     }
 
-    .login-form{
-        margin-top:7vh;
-        .el-button{
+
+
+    .login-form {
+        margin-top: 7vh;
+        .el-button {
             //letter-spacing: 20px;
             //text-indent: 20px;
-            background-color:#00b8ff;
-            border-color:#00b8ff;
-            width:100%;
+            background-color: #00b8ff;
+            border-color: #00b8ff;
+            width: 100%;
             > span{
                 letter-spacing:15px;
                 margin-left:15px;
@@ -65,93 +67,93 @@
                 }
             }
         }
-        .el-form-item{
-            margin-bottom:20px;
-            &:nth-child(3){
-                margin-bottom:40px;
+        .el-form-item {
+            margin-bottom: 20px;
+            &:nth-child(3) {
+                margin-bottom: 40px;
             }
-            &:nth-child(4){
-                padding-bottom:30px;
-                margin-bottom:0;
+            &:nth-child(4) {
+                padding-bottom: 30px;
+                margin-bottom: 0;
             }
-            .el-form-item__content{
-                margin-left:0 !important;
-                ::-webkit-input-placeholder{
+            .el-form-item__content {
+                margin-left: 0 !important;
+                 ::-webkit-input-placeholder {
                     /* WebKit browsers */
-                    color:#ccc;
-                    font-size:14px;
+                    color: #ccc;
+                    font-size: 14px;
                 }
-                :-moz-placeholder{
+                 :-moz-placeholder {
                     /* Mozilla Firefox 4 to 18 */
-                    color:#ccc;
-                    font-size:14px;
+                    color: #ccc;
+                    font-size: 14px;
                 }
-                ::-moz-placeholder{
+                 ::-moz-placeholder {
                     /* Mozilla Firefox 19+ */
-                    color:#ccc;
-                    font-size:14px;
+                    color: #ccc;
+                    font-size: 14px;
                 }
-                :-ms-input-placeholder{
+                 :-ms-input-placeholder {
                     /* Internet Explorer 10+ */
-                    color:#ccc;
-                    font-size:14px;
+                    color: #ccc;
+                    font-size: 14px;
                 }
-                .el-input__inner{
-                    padding:3px 10px 3px 35px;
-                    font-size:14px;
-                    color:#666;
+                .el-input__inner {
+                    padding: 3px 10px 3px 35px;
+                    font-size: 14px;
+                    color: #666;
                 }
             }
             .username,
             .password,
-            .captcha{
-                position:relative;
+            .captcha {
+                position: relative;
             }
-            .username > i,
-            .password > i,
-            .captcha > i{
-                position:absolute;
-                top:0;
-                font-size:16px;
-                left:6px;
+            .username>i,
+            .password>i,
+            .captcha>i {
+                position: absolute;
+                top: 0;
+                font-size: 16px;
+                left: 6px;
             }
-            .password > i{
-                font-size:15px;
-                left:7px;
+            .password>i{
+                font-size: 15px;
+                left: 7px;
             }
-            .username > i{
-                font-size:20px;
-                left:3px;
-                top:3px;
+            .username>i {
+                font-size: 20px;
+                left: 3px;
+                top: 3px;
             }
-            .captcha{
-                font-size:0;
-                & > .el-input{
-                    width:60%;
-                    vertical-align:top;
+            .captcha {
+                font-size: 0;
+                &>.el-input {
+                    width: 60%;
+                    vertical-align: top;
                 }
-                .svg-captcha-smooth-wrap{
-                    width:40%;
-                    height:36px;
-                    display:inline-block;
-                    vertical-align:top;
-                    text-align:center;
-                    img{
-                        height:36px;
+                .svg-captcha-smooth-wrap {
+                    width: 40%;
+                    height: 36px;
+                    display: inline-block;
+                    vertical-align: top;
+                    text-align: center;
+                    img {
+                        height: 36px;
                     }
                 }
             }
         }
     }
-    .login-form > div{
-        margin-left:~'-webkit-calc(100vw - 100%)';
-        margin-left:~'calc(100vw - 100%)';
-        width:318px;
-        & > p{
-            color:#00b8ff;
-            font-size:12px;
-            text-align:center;
-            margin-bottom:0;
+    .login-form>div {
+        margin-left: ~'-webkit-calc(100vw - 100%)';
+        margin-left: ~'calc(100vw - 100%)';
+        width: 318px;
+        &>p {
+            color: #00b8ff;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 0;
         }
     }
 }

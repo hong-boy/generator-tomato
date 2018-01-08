@@ -11,7 +11,7 @@ const WHITE_LIST = [
     '/auth',
     '/login',
     '/logout',
-    '/captcha', // 登录页面验证码
+    '/login/captcha', // 登录页面验证码
 ];
 
 // 组装权限

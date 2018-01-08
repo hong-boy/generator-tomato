@@ -8,16 +8,16 @@ import MainPage from '../components/main_page/main_page.vue'
 
 const routes = [];
 
-let homeRouter = {path: '/index', component: HomePage, children: []};
+let homeRouter = { path: '/index', component: HomePage, children: [] };
 const children = homeRouter.children;
 
-routes.push({path: '/login', component: LoginPage});
-routes.push({path: '/logout', redirect: '/login'});
+routes.push({ path: '/login', component: LoginPage });
+routes.push({ path: '/logout', redirect: '/login' });
 routes.push(homeRouter);
-children.push({path: '/', component: MainPage});
-children.push({path: '/demo', component: DemoPage});
-routes.push({path: '/404', component: NotFoundPage});
-routes.push({path: '*', redirect: '/404'});
+children.push({ path: '/', component: MainPage });
+children.push({ path: '/demo', component: DemoPage });
+routes.push({ path: '/404', component: NotFoundPage });
+routes.push({ path: '*', redirect: '/404' });
 
 export default new VueRouter({
     mode: 'history', // 使用H5 history，需要配合router-link标签

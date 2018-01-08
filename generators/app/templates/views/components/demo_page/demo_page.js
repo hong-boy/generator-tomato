@@ -1,9 +1,11 @@
 'use strict';
 import demo_child from './demo_child.vue'
-
+import { mavonEditor } from 'mavon-editor'
 export default {
     data(){
         return {
+            demoMarkdown: '\n ![img.png](./0)',
+            vloading2: false,
             form: {
                 accountName: '',
                 accountPwd: '',
@@ -90,13 +92,44 @@ export default {
             },
             currCompt: 'demoChild', // 当前组件
             loading4btn: false,
+            toolbarsFlag:false
         };
     },
+    // mounted() {
+    //     // 如果原始md字符串中存在曾上传的图片， 则需要将对应<img>中的src替换为base64
+    //     this.$nextTick(() => {
+    //         $vm.$imgUpdateByUrl('./0', '');
+    //     }
+    // },
     components: {
         // 注册局部组件
-        demoChild: demo_child
+        demoChild: demo_child,
+        //编辑器
+        mavonEditor:mavonEditor
     },
     methods: {
+        parseEvent(event){
+            console.log('parseEvent: ', event.target, arguments);
+            var clipboardData = event.clipboardData, item,items;
+            if( clipboardData ){
+                items = clipboardData.items;
+                if( !items ){
+                    return;
+                }
+                item = items[0];
+                if( item && item.kind === 'file' && item.type.match(/^image\//i) ){
+                    var blob = item.getAsFile(),
+                        reader = new FileReader();
+                    reader.onload = function( e ){
+                        var img = new Image();
+                        img.src = e.target.result;
+                        event.target.value = e.target.result;
+                        console.log(e.target.result);
+                    };
+                    reader.readAsDataURL( blob );
+                }
+            }
+        },
         openDialog4Confirm(){
             this.dialog.visible = true;
         },
@@ -139,6 +172,27 @@ export default {
             setTimeout(function () {
                 inst.close();
             }, 3000)
-        }
+        },
+        openLoading2(){
+            this.vloading2 = true;
+            setTimeout(() => {
+                this.vloading2 = false;
+            }, 5000);
+        },
+        search4Table(){
+            IOT.fetch('/app/list/getData', {}, {target: '.demo-page table.el-table__body'});
+        },
+        // $imgAdd(pos, $file){
+        //     // 将图片上传到服务器.
+        //     var formdata = new FormData();
+        //     formdata.append('image', $file);
+        //     axios({
+        //         url: 'server url',
+        //         method: 'post',
+        //         data: formdata,
+        //         headers: { 'Content-Type': 'multipart/form-data' },
+        //     }).then((flag) => {
+        //     })
+        // }
     }
 }

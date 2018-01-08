@@ -4,6 +4,7 @@ var router = new Router();
 var path = require('path');
 var send = require('koa-send');
 var conf = require('../../config/env');
+var Demo = require('./Demo');
 var User = require('./User');
 var UserCtrl = require('../controller/UserController');
 var canAccessPath = require('../Auth.js').canAccessPath;
@@ -17,7 +18,7 @@ const defaultPage = conf.defaultPage;
  * （PS：配置koa-connect-api-fallback中间件后，此路由失效）
  */
 router.get(['/', '/index'], async (ctx, next) => {
-    await send(ctx, defaultPage, {root: rootPath});
+    await send(ctx, defaultPage, { root: rootPath });
 });
 
 router.post('/auth', async (ctx, next) => {
@@ -36,16 +37,19 @@ router.post('/auth', async (ctx, next) => {
         isLogin = true;
         isAuth = true;
     }
-    bean.data = {isAuth: isAuth, isLogin: isLogin};
+    bean.data = { isAuth: isAuth, isLogin: isLogin };
     ctx.body = bean;
 });
 
 router.post('/login', UserCtrl.signin);
 router.post('/logout', UserCtrl.signout);
 
-router.get('/captcha', UserCtrl.captcha);
+router.get('/login/captcha', UserCtrl.captcha);
 
 // 路由配置 - User
 router.use('/user', User.routes(), User.allowedMethods());
+
+// 路由配置 - Demo
+router.use('/demo', Demo.routes(), Demo.allowedMethods());
 
 module.exports = router;

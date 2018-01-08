@@ -84,5 +84,5 @@ function onError(error) {
 
 function onListening() {
     let protocol = 'http';
-    process.stdout.write(`Server is ready! Visit on ${protocol}://localhost:${port}${conf.project}`);
+    logger.info(`Server is ready! Visit on ${protocol}://localhost:${port}${conf.project}`);
 }

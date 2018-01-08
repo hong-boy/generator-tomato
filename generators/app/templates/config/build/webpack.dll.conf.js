@@ -8,7 +8,21 @@ let dllPath = path.join(rootdir, app.dist, "dll");
 
 module.exports = {
     entry: {
-        vendor: ['vue', 'vue-router', 'lodash', 'element-ui']
+        vendor: [
+            'vue',
+            'vue-router',
+            'lodash',
+            'element-ui',
+            'echarts',
+            'jquery',
+            'vue-scrollbars',
+            'nprogress',
+            'mavon-editor',
+            'moment',
+            'vue-codemirror',
+            'isomorphic-fetch',
+
+        ]
     },
     output: {
         path: dllPath,
@@ -21,7 +35,7 @@ module.exports = {
             name: "[name]",
             context: rootdir
         }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
+        // new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin()
     ]
 };

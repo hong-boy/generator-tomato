@@ -1,12 +1,16 @@
 {
     "presets":[
         [
-            "es2015",
+            "env",
             {
-                "modules":false
+                "modules":false,
+                "targets":{
+                    "browsers":[
+                        "last 2 versions",
+                        "safari >= 7"
+                    ]
+                }
             }
-        ],
-        "es2015-node5",
-        "stage-2"
+        ]
     ]
 }

@@ -88,7 +88,7 @@
                         <el-input :model="table.search.appNameCn" placeholder="请输入应用名称"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="icon-btn">
+                        <el-button class="icon-btn" @click="search4Table">
                             <i class="icon-search"></i>
                         </el-button>
                     </el-form-item>
@@ -199,11 +199,15 @@
                 </el-button>
             </div>
         </section>
-        <section class="section" id="sec_panel">
+        <section class="section" id="sec_panel"
+                 v-loading2="{visible:vloading2, timeout:500000, background:'transparent'}">
             <h2>Loading</h2>
             <div class="sec-panel">
                 <el-button type="primary" @click="openLoading">
-                    全局Loading
+                    VLoading
+                </el-button>
+                <el-button type="primary" @click="openLoading2">
+                    自定义VLoading2
                 </el-button>
             </div>
         </section>
@@ -237,6 +241,18 @@
                 <el-tag type="warning" solid size="small">small 标签四</el-tag>
                 <el-tag type="danger" solid closable size="small">small 标签五</el-tag>
             </div>
+        </section>
+        <section class="section">
+            <h2>编辑器</h2>
+            <mavon-editor
+                :ishljs = "true"
+                :toolbarsFlag="toolbarsFlag"
+                :external_link="false"
+                v-model="demoMarkdown"/>
+        </section>
+        <section class="section">
+            <h2>编辑器</h2>
+            <textarea @paste.self="parseEvent($event)" placeholder="截屏后粘贴到输入框中"></textarea>
         </section>
     </div>
 </template>

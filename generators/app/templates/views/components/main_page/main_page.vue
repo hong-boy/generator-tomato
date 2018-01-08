@@ -71,9 +71,10 @@
                               style="width: 100%">
                         <el-table-column class-name="app-name" align="left" label="应用名称" width="300">
                             <template slot-scope="scope">
-                                <router-link class="link" :to="'/app/list/survey/'+scope.row.appId">
+                                <router-link v-if="[3, 4].indexOf(scope.row.status) !== -1" class="link" :to="'/app/list/survey/'+scope.row.appId">
                                     {{scope.row.appNameCn}}
                                 </router-link>
+                                <span v-else>{{scope.row.appNameCn}}</span>
                             </template>
                         </el-table-column>
                         <el-table-column class-name="app-status" label="应用状态" align="center" width="150">
@@ -91,16 +92,12 @@
                         <el-table-column prop="uDate" label="更新时间" align="center" width="250">
                         </el-table-column>
                     </el-table>
-                    <div id="loadmore" v-if="!vloadingBody && !v4AppNoData" class="load-more">
+                    <div id="loadmore" v-if="!vloadingBody && !v4AppNoData" class="load-more"
+                         v-loading2="{visible:vloading, background:'transparent'}">
                         <span v-if="!vloading">
                             {{text}} {{table.list.length}} 个应用，
                             <em class="link" @click="loadmore">点击查看更多</em>
                         </span>
-                        <div class="loading pluse" v-if="vloading">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
                     </div>
                     <div v-if="!vloadingBody && v4AppNoData" class="no-data">
                         <span>没有查询到数据:(</span>

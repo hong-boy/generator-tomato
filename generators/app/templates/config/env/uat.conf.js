@@ -1,18 +1,18 @@
 let deepMerge = require('lodash/defaultsDeep');
 let base = require('./base.conf');
 /**
- * 用于生产环境
+ * 用于demo环境
  */
 module.exports = deepMerge({
     debug: false,
     port: 3017,
-    env: 'production',
-    dist: 'dist/prod',
+    env: 'uat',
+    dist: 'dist/uat',
     log4js: {
         level: 'info'
     },
     session: {
-        key: 'prdsid',
+        key: 'uatsid',
         store: require('../session/redis.store.js') // 传入SessionStore类
     },
     webservice: {
@@ -23,7 +23,7 @@ module.exports = deepMerge({
         host: '',
         port: 6379,
         db: 15,
-        keyPrefix: 'BAASBS:PRD:',
+        keyPrefix: 'BAASBS:UAT:',
         maxAge: 3600000,
     },
     store: 'redis'

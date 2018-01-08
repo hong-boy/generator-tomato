@@ -12,14 +12,15 @@ describe('app/controller/UserController.js', function () {
         this.agent = agent;
     });
 
+    // dist目录下必须有index.html页面存在 !!
     it('#login.html', function (done) {
         this.agent
             .get('/login')
             .set('Accept', 'text/html')
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(res => {
-                assert.equal(res.res.statusCode, 200);
-                assert(res.res.text);
+                assert.equal(res.statusCode, 200);
+                assert(res.text);
             })
             .end(done);
     });
@@ -40,7 +41,7 @@ describe('app/controller/UserController.js', function () {
             .post('/login')
             .set('X-Requested-With', 'Fetch')
             .set('Accept', 'application/json; charset=utf-8')
-            .send({username: conf.user.name, password: conf.user.pwd})
+            .send({ username: conf.user.name, password: conf.user.pwd })
             .expect(function (res) {
                 console.log(res.body);
                 assert.equal(res.body.status, 200);

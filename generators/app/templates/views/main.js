@@ -1,6 +1,8 @@
 'use strict';
 import Vue from 'vue'
-import Vuebar2 from './components/common/vuebar/vuebar2.js';
+import NProgress from 'nprogress'
+import Vuescrollbars from 'vue-scrollbars';
+import VLoading2 from './components/common/vloading2/directive.js';
 import VueRouter from 'vue-router'
 import ElementUI from 'element-ui'
 import router from './routes'
@@ -8,13 +10,19 @@ import LayoutView from './layout.vue'
 // 全局引入
 import IOT from 'IOT'
 import jquery from 'jquery'
+import echarts from 'echarts/lib/echarts'
+import { line } from 'echarts'
+import zrender from 'zrender'
+import 'vue-scrollbars/dist/bundle.css';
+import 'nprogress/nprogress.css'
+import 'animate.css'
 import './assets/less/normalize.css'
 import './assets/fontello/css/fontello.css'
-import './components/common/vuebar/vuebar2.less'
 import './assets/less/element-theme/index.css'
 import './assets/less/common.less'
 
-Vue.use(Vuebar2);
+Vue.use(Vuescrollbars);
+Vue.use(VLoading2);
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 
@@ -23,8 +31,17 @@ window.IOT = IOT;
 window.$ = jquery;
 window.jquery = jquery;
 window.jQuery = jquery;
+window.zrender = zrender;
+Vue.prototype.$echarts = echarts;
+
+// 配置NProgress
+NProgress.configure({
+    showSpinner: false
+});
 
 router.beforeEach(async (to, from, next) => {
+    NProgress.start();
+    NProgress.set(0.4);
     // 校验页面访问权限
     let path = to.path;
     // 若为白名单
@@ -41,6 +58,10 @@ router.beforeEach(async (to, from, next) => {
     } else {
         next();
     }
+});
+
+router.afterEach(() => {
+    NProgress.done();
 });
 
 new Vue({

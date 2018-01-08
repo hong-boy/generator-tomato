@@ -21,5 +21,6 @@ class ResponseBean {
 
 ResponseBean.STATUS = StatusCode;
 ResponseBean.STATUS_MESSAGE = StatusCode.Message;
+ResponseBean.RET_TO_STATUS = StatusCode.RetToStatus;
 
 module.exports = ResponseBean;

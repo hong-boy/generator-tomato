@@ -29,7 +29,7 @@ function _request(method, restify) {
         request(option, function (err, res, body) {
             logger.info(watch.end());
             if (err || res.statusCode != StatusCode.OK) {
-                resolve(_handleError(method, path, err || res));
+                resolve(_handleError(restify.ctx, method, path, err || res));
                 return;
             }
             res.headers['session-token'] && (body['access_token'] = res.headers['session-token']);
@@ -40,12 +40,29 @@ function _request(method, restify) {
     return promise;
 }
 
-function _handleError(method, path, err) {
+function _handleError(ctx, method, path, err) {
     if (err.statusCode) {
-        var msg = err.body ? JSON.stringify(err.body) : err.statusMessage;
+        let ret = null;
+        let msg = err.body ? JSON.stringify(err.body) : err.statusMessage;
         logger.error('Error happened when excute %s method - code: %d. Error message: %s', method, err.statusCode, msg);
-        return {code: StatusCode.API_ERROR, msg: '远程服务器发生错误，数据操作失败！', statusCode: err.statusCode};
-    } else if (err.code) {
+        switch (err.statusCode){
+            case 99400: {
+                // session-token失效
+                ctx.logout();
+                ctx.session.passport = null;
+                delete ctx.session['passport'];
+                ctx.status = 408||StatusCode.SESSION_TOKEN_INVALID;
+                ctx['session-token-invalid'] = err.body;
+                ret = {code: StatusCode.SESSION_TOKEN_INVALID, msg: msg, statusCode: err.statusCode};
+                break;
+            }
+            default: {
+                ret = {code: StatusCode.API_ERROR, msg: '远程服务器发生错误，数据操作失败！', statusCode: err.statusCode};
+            }
+        }
+        return ret;
+    }
+    if (err.code) {
         logger.error('[%s] - %s - problem with request: %s', method, path, err.message);
         var ret = {code: StatusCode.API_ERROR, msg: err.message};
         if (err.code === 'ECONNREFUSED' || err.code === 'read ECONNRESET') {

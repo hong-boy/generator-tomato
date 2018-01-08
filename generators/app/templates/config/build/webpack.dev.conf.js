@@ -8,6 +8,7 @@ let rootdir = app.rootdir;
 
 module.exports = merge(base, {
     watch: true,
+    devtool: 'eval', // 方便源码调试
     output: {
         path: path.join(rootdir, dist),
         publicPath: '',

@@ -9,6 +9,7 @@ const StatusCode = {
     SYS_ERROR: -5, // 系统处理异常
     BIZ_ERROR: -6, // 具体项目涉及到的业务处理相关的错误
     VALIDATION_ERROR: -7, // 参数校验失败
+    SESSION_TOKEN_INVALID: 408, // session-token失效
 };
 
 StatusCode.Message = {
@@ -20,6 +21,24 @@ StatusCode.Message = {
     '-5': '系统错误',
     '-6': '业务错误',
     '-7': '参数校验错误',
-};
+    '408': 'session-token失效',
 
+};
+/**
+ * 后台API返回的CODE对应ResponseBean Status Code
+ */
+StatusCode.RetToStatus = {
+    404: '-4',
+    400: '-7',
+    422: '-2',
+    401: '-4',
+    500: '-2',
+    4: '-4',
+    5: '-4',
+    6: '-4',
+    7: '-4',
+    415: '-2',
+    410: '-4',
+    412: '-2',
+};
 module.exports = StatusCode;

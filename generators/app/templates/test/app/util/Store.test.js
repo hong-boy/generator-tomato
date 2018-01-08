@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('power-assert');
-const StoreUtil = require('../.././util/Store.js').StoreUtil;
+const StoreUtil = require('../../../app/util/Store.js').StoreUtil;
 
 describe('app/util/Store.js', function () {
     beforeEach(function () {
@@ -29,7 +29,7 @@ describe('app/util/Store.js', function () {
 
     describe('存储模式：Redis', function () {
         let store = new StoreUtil('redis');
-        it('#set() - should return OK', async function () { // TODO - PS: 使用async/await时，回调函数不能加上done参数
+        it('#set() - should return OK', async function () {
             let result = await store.set(this.key, this.value, this.maxAge);
             assert.ok(result, '存储失败');
             console.log(result);

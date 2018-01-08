@@ -13,7 +13,7 @@ module.exports = deepMerge({
         level: 'debug'
     },
     webservice: {
-        baseUrl: 'http://172.19.3.138:6542/web',
+        baseUrl: '',
         gzip: true,
     },
     store: null

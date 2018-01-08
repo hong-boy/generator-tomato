@@ -4,11 +4,16 @@ var gulp = require('gulp'),
     ora = require('ora'),
     gulpWebpack = require('webpack-stream'),
     watch = require('gulp-watch'),
+    istanbul = require('gulp-istanbul'),
+    mocha = require('gulp-mocha'),
+    isparta = require('isparta'),
     notify = require('gulp-notify'),
     clean = require('gulp-clean'),
     path = require('path'),
+    fs = require('fs'),
     _ = require('lodash');
 
+// 依赖NODE_ENV和NODE_ENV_UAT环境变量的配置
 var app = require('./config/env');
 const rootdir = app.rootdir;
 const distPath = app.dist;
@@ -22,6 +27,18 @@ var tasks = {
     'clean': {
         excute: function () {
             return gulp.src('dist/*', {read: false})
+                .pipe(clean())
+                .on('end', () => {
+                    notify({message: '目录清理完成 - [dist/]'});
+                });
+        }
+    },
+    /**
+     * 清除目录(不包含dll)
+     */
+    'cleanWithoutDLL': {
+        excute: function () {
+            return gulp.src([`${distPath}/*`, `!${[distPath, 'dll'].join('/')}`], {read: false})
                 .pipe(clean())
                 .on('end', () => {
                     notify({message: '目录清理完成 - [dist/]'});
@@ -82,16 +99,18 @@ var tasks = {
         excute: function () {
             const list = [
                 path.join(__dirname, '**', '*.*'),
+                path.join(__dirname, '**', '.gitkeep'),
                 '.babelrc',
-                '!./node_modules/**/*.*',
+                './node_modules/**/*.*',
                 '!./coverage/**/*.*',
                 '!./test/**/*.*',
                 '!./views/**/*.*',
                 '!./.git/**/*.*',
                 '!./.idea/**/*.*',
+                '!./.vscode/**/*.*',
                 '!./README.md',
-                '!./logs/*.log.*',
                 '!./gulpfile.js',
+                '!./package-lock.json',
                 '!./*.zip'
             ];
             gulp.src(list)
@@ -100,7 +119,7 @@ var tasks = {
                     mode4directory: parseInt('0100755', 8) // drwxr-xr-x
                 }))
                 .pipe(gulp.dest(zipDestPath))
-                .pipe(notify({message: 'Packaging...'}));
+                .pipe(notify({message: 'Package done...'}));
         }
     }
 };
@@ -202,6 +221,9 @@ TaskExecuter.prototype.excute = function () {
     gulp.start.apply(gulp, taskNameList);
 };
 
+/**
+ * uat环境和production可以共用webpack.prod.conf.js
+ */
 gulp.task('build:prod', function (cb) {
     let taskList = {
         clean: tasks.clean,
@@ -212,11 +234,35 @@ gulp.task('build:prod', function (cb) {
     executer.excute();
 });
 
+/**
+ * 开发环境实时编译
+ * Usage:
+ *  npm run watch [:dll]，其中:dll表示强制重新编译DLL
+ */
 gulp.task('build:dev', function () {
+    // console.log(process.argv);
+    let forceBuildDLL = process.argv.slice(4).join('') === ':dll';
+    let flag = false;
+    try {
+        fs.accessSync(path.join(distPath, 'dll'));
+    } catch (e) {
+        flag = true;
+        console.error('[WARN]', e.code, e.message);
+    }
+    flag = forceBuildDLL || flag;
+    let taskList = {};
+    let list = [];
+    list.push({name:'clean', task:tasks.cleanWithoutDLL});
+    !!flag && list.push({name:'dll', task:tasks.compileDll});
+    list.push({name:'dev', task:tasks.webpackdev});
+    list.forEach(item=>taskList[item.name] = item.task);
+    let executer = new TaskExecuter(gulp, taskList);
+    executer.excute();
+});
+
+gulp.task('build:dll', function () {
     let taskList = {
-        clean: tasks.clean,
         dll: tasks.compileDll,
-        dev: tasks.webpackdev
     };
     let executer = new TaskExecuter(gulp, taskList);
     executer.excute();
@@ -232,4 +278,26 @@ gulp.task('package', function () {
     };
     let executer = new TaskExecuter(gulp, taskList);
     executer.excute();
+});
+
+/**
+ * 单元测试
+ */
+gulp.task('pre-cover', function(){
+    return gulp.src(['./app.js', './app/**/*.js'])
+        .pipe(istanbul({
+            instrumenter: isparta.Instrumenter,
+            includeUntested: true,
+        }))
+        .pipe(istanbul.hookRequire());
+});
+gulp.task('cover', ['pre-cover'], function () {
+    return gulp.src(['./test/app/controller/**/*.test.js'])
+        .pipe(mocha())
+        .pipe(istanbul.writeReports({
+            dir: './coverage',
+            reporters: [ 'lcov', 'json', 'text', 'text-summary', 'html' ],
+            reportOpts: { dir: './coverage' },
+        }))
+        // .pipe(istanbul.enforceThresholds({thresholds:{global:90}}))
 });
