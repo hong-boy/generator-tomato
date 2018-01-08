@@ -8,7 +8,7 @@ const PREFIX_4_ROLE = 'ROLE';
 const env = require('../env.js');
 const MAXAGE_4_ROLE = env.session.maxAge;
 const isDebug = !!env.debug;
-const bsAdminId = 1;//后台管理员roleId为固定值1
+const ADMIN_ROLE_ID = 1;//后台管理员roleId为固定值1
 
 /**
  * 根据用户角色ID获取用户权限
@@ -55,7 +55,7 @@ async function fetchUser(username, password) {
         user: null,
         msg: null,
     };
-    let ret = await restify.get(`/login?uname=${username}&psw=${password}&roleId=${bsAdminId}`);
+    let ret = await restify.get(`/login?uname=${username}&psw=${password}&roleId=${ADMIN_ROLE_ID}`);
     if (ret.code != 200) {
         result.err = ret.code;
         result.msg = ret.msg;
@@ -74,7 +74,7 @@ async function fetchUser(username, password) {
         return result;
     }
 
-    result.err = ret.code; // 200
+    result.err = ret.code;
     result.user = ret.data;
     let privs = await processPrivsUrl(result.user.roleId);
     result.user = lodash.assign({access_token: ret.access_token}, result.user, privs);

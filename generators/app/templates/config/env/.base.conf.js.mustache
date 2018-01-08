@@ -1,7 +1,7 @@
 'use strict';
 let path = require('path');
 let rootdir = path.resolve(__dirname, '../../'); // 工程根路径
-const project = '/{{&apppath}}';
+const project = '{{&apppath}}';
 const conf = {
 project: project,
 port: 3000,
@@ -29,7 +29,7 @@ redis: { // 通常一个项目只需配置一台redis服务器即可
 host: '127.0.0.1',
 port: 6379,
 db: 15,
-keyPrefix: '{{&apppath}}:', // 定义redis中变量的固定前缀
+keyPrefix: '{{&appname}}:', // 定义redis中变量的固定前缀
 maxAge: 3600000, // 定义常量在redis中的生命周期 默认1h
 },
 store: null // 定义将项目中的常量存储于何处。null:NodeJS内存（默认） redis:Redis服务器

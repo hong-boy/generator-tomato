@@ -1,39 +1,39 @@
 {
-    "name":"generator-tomato",
-    "version":"0.1.4",
-    "description":"Scaffolding of tomato",
-    "main":"generators/app/index.js",
-    "scripts":{
-        "test":"mocha test/**/*.test.js"
+    "name": "generator-tomato",
+    "version": "0.1.4",
+    "description": "Scaffolding of tomato",
+    "main": "generators/app/index.js",
+    "scripts": {
+        "test": "mocha test/**/*.test.js"
     },
-    "files":[
+    "files": [
         "generators"
     ],
-    "repository":{
-        "type":"git",
-        "url":"git+https://github.com/hong-boy/generator-tomato.git"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hong-boy/generator-tomato.git"
     },
-    "keywords":[
+    "keywords": [
         "yeoman-generator"
     ],
-    "bugs":{
-        "url":"https://github.com/hong-boy/generator-tomato/issues"
+    "bugs": {
+        "url": "https://github.com/hong-boy/generator-tomato/issues"
     },
-    "homepage":"https://github.com/hong-boy/generator-tomato#readme",
-    "author":"hong-boy",
-    "license":"MIT",
-    "dependencies":{
-        "chalk":"^1.1.3",
-        "lodash":"^4.17.4",
-        "mkdirp":"^0.5.1",
-        "mustache":"^2.3.0",
-        "yeoman-generator":"^1.1.1",
-        "yosay":"^2.0.0"
+    "homepage": "https://github.com/hong-boy/generator-tomato#readme",
+    "author": "hong-boy",
+    "license": "MIT",
+    "dependencies": {
+        "chalk": "^1.1.3",
+        "lodash": "^4.17.4",
+        "mkdirp": "^0.5.1",
+        "mustache": "^2.3.0",
+        "yeoman-generator": "^1.1.1",
+        "yosay": "^2.0.0"
     },
-    "devDependencies":{
-        "fs-extra":"^3.0.1",
-        "mocha":"^3.4.2",
-        "yeoman-assert":"^3.0.0",
-        "yeoman-test":"^1.6.0"
+    "devDependencies": {
+        "fs-extra": "^3.0.1",
+        "mocha": "^3.4.2",
+        "yeoman-assert": "^3.0.0",
+        "yeoman-test": "^1.6.0"
     }
 }
