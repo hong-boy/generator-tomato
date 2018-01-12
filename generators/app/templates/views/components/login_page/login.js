@@ -7,6 +7,7 @@ export default {
     data() {
         return {
             desc4btn: '登录',
+            url4captcha: 'common/captcha',
             form: {
                 username: '',
                 password: '',
@@ -58,10 +59,10 @@ export default {
             });
             return false;
         },
-        reloadCaptcha() {
+        reloadCaptcha(e) {
             this.form.captcha = '';
-            let src = 'login/captcha?time=' + Date.now();
-            $('#captcha').attr('src', src);
+            let img = e.target;
+            img.src = `${this.url4captcha}?_=${Date.now()}`;
         }
     }
 }

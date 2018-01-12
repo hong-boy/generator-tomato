@@ -13,6 +13,11 @@ module.exports = merge(base, {
         filename: '[name].[hash].js'
     },
     plugins: [
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("production")
+            }
+        }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
@@ -22,10 +27,5 @@ module.exports = merge(base, {
         //     name: "common",
         //     filename: "[name].bundle.[hash].js"
         // }),
-        new webpack.DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify("production")
-            }
-        })
     ]
 });

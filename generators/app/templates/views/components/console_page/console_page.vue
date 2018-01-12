@@ -1,9 +1,9 @@
 <template>
-    <div class="home-page">
-        <header-bar defaultMenuItem="/index"></header-bar>
-        <div class="flex-grow">
-            <p>首页页面</p>
-        </div>
+    <div class="console-page">
+        <header-bar ref="headerbar"></header-bar>
+        <transition name="slide">
+            <router-view class="page el-row"></router-view>
+        </transition>
         <footer-bar></footer-bar>
     </div>
 </template>
@@ -22,6 +22,8 @@
 
 <style lang="less">
     @import "../../assets/less/mixin.less";
-    .home-page {
+    .console-page {
+        min-height: 100vh;
+        .flexlayout(flex, row, center, space-between);
     }
 </style>

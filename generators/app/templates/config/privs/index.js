@@ -9,9 +9,9 @@ var roles = require('./roles.conf'),
  */
 const WHITE_LIST = [
     '/auth',
-    '/login',
     '/logout',
-    '/login/captcha', // 登录页面验证码
+    '/login',
+    /^\/common\/[\w|\/]+\w+$/i, // 公共路由 例如：/common/*
 ];
 
 // 组装权限

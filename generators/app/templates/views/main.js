@@ -45,7 +45,7 @@ router.beforeEach(async (to, from, next) => {
     // 校验页面访问权限
     let path = to.path;
     // 若为白名单
-    if (path === '/404' || path === '/login') {
+    if (path === '/404' || path === '/login' || path === '/index' || path === '/wiki') {
         return next();
     }
     // 向后端验证访问权限

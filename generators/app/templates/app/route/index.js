@@ -44,7 +44,7 @@ router.post('/auth', async (ctx, next) => {
 router.post('/login', UserCtrl.signin);
 router.post('/logout', UserCtrl.signout);
 
-router.get('/login/captcha', UserCtrl.captcha);
+router.get('/common/captcha', UserCtrl.captcha);
 
 // 路由配置 - User
 router.use('/user', User.routes(), User.allowedMethods());

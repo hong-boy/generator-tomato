@@ -188,7 +188,7 @@ let redirect2NotFound = function (router) {
 let signout = function () {
     // removeUserInfo();
     removeUserInfoLocalStorage();
-    return fetch('/logout');
+    fetch('/logout');
 };
 
 /**
@@ -334,5 +334,5 @@ export default {
     closeLoading,
     showMessage,
     closeMessage,
-    showLoading2
+    showLoading2,
 }

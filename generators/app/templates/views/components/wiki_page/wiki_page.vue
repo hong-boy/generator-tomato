@@ -1,8 +1,8 @@
 <template>
-    <div class="home-page">
-        <header-bar defaultMenuItem="/index"></header-bar>
+    <div class="wiki-page">
+        <header-bar defaultMenuItem="/wiki"></header-bar>
         <div class="flex-grow">
-            <p>首页页面</p>
+            <p>Wiki 页面</p>
         </div>
         <footer-bar></footer-bar>
     </div>
@@ -22,6 +22,6 @@
 
 <style lang="less">
     @import "../../assets/less/mixin.less";
-    .home-page {
+    .wiki-page {
     }
 </style>

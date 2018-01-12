@@ -43,8 +43,10 @@ let canAccessPath = function (ctx, url) {
  * @param next
  */
 let auth = async function (ctx, next) {
-    if ((lodash.includes(WHITE_LIST, cleanPath(ctx.path)))
-        || (ctx.isAuthenticated() && canAccessPath(ctx))) {
+    let path = cleanPath(ctx.path);
+    let isWhiteList = WHITE_LIST.some(item=>item instanceof RegExp ? item.test(path) : (path === item));
+
+    if (isWhiteList || (ctx.isAuthenticated() && canAccessPath(ctx))) {
         await next();
         return;
     }

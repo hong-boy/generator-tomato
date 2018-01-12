@@ -71,7 +71,7 @@ app.use(historyFallback({
     index: ['/', conf.defaultPage].join(''),
     verbose: conf.debug,
     rewrites: [
-        {from: `${conf.project}/login/captcha`, to: rule => `${conf.project}/login/captcha`},
+        {from: `${conf.project}/common/captcha`, to: rule => `${conf.project}/common/captcha`},
     ]
 }));
 

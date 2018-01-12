@@ -33,7 +33,7 @@
                             <el-input v-model="form.captcha" placeholder="请输入验证码" :maxlength="4" @keyup.enter.native="submitForm('form')"></el-input>
                             <i class="icon-verify-icon"></i>
                             <div class="svg-captcha-smooth-wrap">
-                                <img id="captcha" src="login/captcha" alt="验证码" title="看不清楚？换一张" @click="reloadCaptcha">
+                                <img id="captcha" :src="url4captcha" alt="验证码" title="看不清楚？换一张" @click.stop.prevent="reloadCaptcha($event)">
                             </div>
                         </div>
                     </el-form-item>

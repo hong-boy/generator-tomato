@@ -6,6 +6,14 @@
     @pagePadding:20px; // .page上下内边距
     background: #FFF;
     color:@blackColor;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+    .core-view {
+        min-height: 100vh;
+        .flexlayout(flex, column, stretch, space-between);
+        .flex-grow {
+            flex-grow: 1;
+        }
+    }
     .header-bar {
         position: relative;
         box-sizing: border-box;
@@ -52,7 +60,7 @@
     .hide {
         display: none !important;
     }
-    .font-weight-900{
+    .bold{
         font-weight: 900;
     }
     .text-center {
@@ -94,7 +102,7 @@
         position: relative;
         .animate(slideUp, 0.5s)
     }
-    a{
+    a {
         text-decoration:none;
     }
     em{
@@ -119,88 +127,6 @@
         font-size:20px;
         font-weight:bold;
     }
-    //页面中有表格的通用样式
-    .main-page-table {
-        .head-wrap {
-            padding: 0 40px;
-            border-bottom: 1px solid #f2f2f2;
-            span {
-                font-size: 14px;
-                color: #999;
-                line-height: 50px;
-            }
-        }
-        .menu {
-            margin-top: 30px;
-            // margin-bottom: 20px;
-            padding: 0 40px;
-            .el-input {
-                ::-webkit-input-placeholder{
-                    /* WebKit browsers */
-                    color: #ccc;
-                    font-size: 14px;
-                }
-                :-moz-placeholder{
-                    /* Mozilla Firefox 4 to 18 */
-                    color: #ccc;
-                    font-size: 14px;
-                }
-                ::-moz-placeholder{
-                    /* Mozilla Firefox 19+ */
-                    color: #ccc;
-                    font-size: 14px;
-                }
-                :-ms-input-placeholder{
-                    /* Internet Explorer 10+ */
-                    color: #ccc;
-                    font-size: 14px;
-                }
-            }
-            // .icon-btn {
-            //     padding:9px 4px;
-            //     margin-left: 11px;
-            // }
-            // .setting-button {
-            //     text-align: right;
-            //     button {
-            //         padding: 12px 10px;
-            //     }
-            // }
-        }
-        .dataList {
-            padding: 0 40px;
-            .el-table__body-wrapper table {
-                color: #666;
-            }
-            .operate>div>span {
-                cursor: pointer;
-                color: #00b8ff;
-            }
-            .pagination-wrap {
-                text-align: center;
-                // padding-top: 30px;
-                padding-bottom: 86px;
-            }
-            // .el-pagination>button,
-            // .el-pagination>ul.el-pager>li {
-            //     border-radius: 3px;
-            //     background-color: #fbfbfb;
-            //     color: #666;
-            //     margin: 0 5px;
-            //     border: 1px solid #ddd;
-            // }
-            // .el-pagination>ul.el-pager li.active {
-            //     background-color: #ededed;
-            //     border: 1px solid #dedede;
-            // }
-            // .el-pagination>ul.el-pager li:hover {
-            //     color: inherit;
-            // }
-            // .el-pagination>ul.el-pager li.more {
-            //     border-radius: 3px;
-            // }
-        }
-    } //end
     // popover深色样式
     div.popover-dark {
         min-width: 20px;
@@ -646,7 +572,8 @@
     }
 
     // 滚动条宽度复写
-    .scrollbar-dynamic > .scroll-element.scroll-y:hover .scroll-element_outer, .scrollbar-dynamic > .scroll-element.scroll-y.scroll-draggable .scroll-element_outer{
+    .scrollbar-dynamic > .scroll-element.scroll-y:hover .scroll-element_outer,
+    .scrollbar-dynamic > .scroll-element.scroll-y.scroll-draggable .scroll-element_outer{
         min-width: 7px;
         width: 12px;
     }

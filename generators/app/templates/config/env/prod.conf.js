@@ -23,7 +23,7 @@ module.exports = deepMerge({
         host: '',
         port: 6379,
         db: 15,
-        keyPrefix: 'BAASBS:PRD:',
+        keyPrefix: 'BAAS:PRD:',
         maxAge: 3600000,
     },
     store: 'redis'

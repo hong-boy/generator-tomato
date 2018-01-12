@@ -4,18 +4,23 @@ import NotFoundPage from '../components/common/404.vue'
 import DemoPage from '../components/demo_page/demo_page.vue'
 import LoginPage from '../components/login_page/login.vue'
 import HomePage from '../components/home_page/home_page.vue'
-import MainPage from '../components/main_page/main_page.vue'
+import WikiPage from '../components/wiki_page/wiki_page.vue'
+import ConsolePage from '../components/console_page/console_page.vue'
 
 const routes = [];
 
-let homeRouter = { path: '/index', component: HomePage, children: [] };
-const children = homeRouter.children;
-
+routes.push({ path: '/index', component: HomePage });
+routes.push({ path: '/wiki', component: WikiPage });
 routes.push({ path: '/login', component: LoginPage });
 routes.push({ path: '/logout', redirect: '/login' });
-routes.push(homeRouter);
-children.push({ path: '/', component: MainPage });
-children.push({ path: '/demo', component: DemoPage });
+
+// 控制台页面
+let router4console = { path: '/console', component: ConsolePage, children: [] };
+const component = router4console.children;
+routes.push(router4console);
+// component.push({ path: '/', component: ConsolePage });
+component.push({ path: '/demo', component: DemoPage });
+
 routes.push({ path: '/404', component: NotFoundPage });
 routes.push({ path: '*', redirect: '/404' });
 
